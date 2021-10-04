@@ -14,7 +14,7 @@ class CreateMaterialImageTable extends Migration
     public function up()
     {
         Schema::create('material_image', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->integer('id');
             $table->integer('material_id');
             $table->string('image_material');
             $table->integer('created_by')->nullable();

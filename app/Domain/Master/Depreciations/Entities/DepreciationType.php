@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Domain\Master\ReasonCodes\Entities;
+namespace App\Domain\Master\Depreciations\Entities;
 
 use App\Domain\Core\Entities\BaseModel;
 use App\Domain\System\Users\Entities\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ReasonCode extends BaseModel
+class DepreciationType extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    const ATTR_TABLE = 'reason_codes';
-
-    const ATTR_CHAR_CODE = 'code';
+    const ATTR_TABLE = 'depreciation_types';
 
     const ATTR_RELATIONSHIP_CREATED_BY = 'createdBy';
     const ATTR_RELATIONSHIP_UPDATED_BY = 'updatedBy';
@@ -47,8 +45,7 @@ class ReasonCode extends BaseModel
     public $timestamps = true;
 
     protected $fillable = [
-        self::ATTR_CHAR_CODE,
-        self::ATTR_CHAR_DESCRIPTION,
+        self::ATTR_CHAR_NAME,
         self::ATTR_INT_CREATED_BY,
         self::ATTR_INT_UPDATED_BY,
     ];

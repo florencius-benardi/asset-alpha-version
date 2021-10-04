@@ -17,8 +17,8 @@ class CreateRolesTable extends Migration
         Schema::create(Role::ATTR_TABLE, function (Blueprint $table) {
             $table->increments(Role::ATTR_INT_ID);
             $table->string(Role::ATTR_CHAR_DESCRIPTION, 50)->unique();
-            $table->bigIncrements(Role::ATTR_INT_CREATED_BY);
-            $table->bigIncrements(Role::ATTR_INT_UPDATED_BY);
+            $table->integer(Role::ATTR_INT_CREATED_BY)->nullable()->unsigned();
+            $table->integer(Role::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
         });
     }

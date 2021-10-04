@@ -14,7 +14,7 @@ class AddForeignKeysToLocationTable extends Migration
     public function up()
     {
         Schema::table('location', function (Blueprint $table) {
-            $table->foreign(['id_plant'])->references(['id'])->on('plant');
+            $table->foreign(['id_plant'])->references(['id'])->on('storages');
             $table->foreign(['created_by'])->references(['id'])->on('users');
             $table->foreign(['updated_by'])->references(['id'])->on('users');
         });

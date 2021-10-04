@@ -15,7 +15,7 @@ class CreateUserGroupsTable extends Migration
     public function up()
     {
         Schema::create(UserGroup::ATTR_TABLE, function (Blueprint $table) {
-            $table->id();
+            $table->smallIncrements(UserGroup::ATTR_INT_ID);
             $table->string(UserGroup::ATTR_CHAR_CODE, 4)->unique();
             $table->string(UserGroup::ATTR_CHAR_DESCRIPTION, 30);
             $table->integer(UserGroup::ATTR_INT_CREATED_BY)->unsigned();

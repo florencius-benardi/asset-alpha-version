@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\System\RoleModuless\Entities;
+namespace App\Domain\System\RoleModules\Entities;
 
 use App\Domain\Core\Entities\BaseModel;
 use App\Domain\System\Modules\Entities\Module;
@@ -77,7 +77,10 @@ class RoleModule extends BaseModel
      */
     public function createdBy()
     {
-        return $this->hasOne(User::class, self::ATTR_INT_CREATED_BY);
+        return $this->hasOne(User::class, self::ATTR_INT_CREATED_BY)->select(
+            User::ATTR_INT_ID,
+            User::ATTR_CHAR_NAME
+        );
     }
 
     /**
@@ -85,6 +88,9 @@ class RoleModule extends BaseModel
      */
     public function updatedBy()
     {
-        return $this->hasOne(User::class, self::ATTR_INT_UPDATED_BY);
+        return $this->hasOne(User::class, self::ATTR_INT_UPDATED_BY)->select(
+            User::ATTR_INT_ID,
+            User::ATTR_CHAR_NAME
+        );
     }
 }

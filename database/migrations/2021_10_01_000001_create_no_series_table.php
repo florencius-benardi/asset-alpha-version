@@ -21,8 +21,8 @@ class CreateTransactionSeriesTable extends Migration
             $table->string(NoSeries::ATTR_CHAR_FORMAT, 100);
             $table->string(NoSeries::ATTR_CHAR_LAST_ORDER_DOCUMENT_NO, 100)->nullable();
             $table->integer(NoSeries::ATTR_INT_LAST_ORDER_NO)->nullable();
-            $table->bigInteger(NoSeries::ATTR_INT_CREATED_BY);
-            $table->bigInteger(NoSeries::ATTR_INT_UPDATED_BY);
+            $table->integer(NoSeries::ATTR_INT_CREATED_BY)->nullable()->unsigned();
+            $table->integer(NoSeries::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId(NoSeries::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');

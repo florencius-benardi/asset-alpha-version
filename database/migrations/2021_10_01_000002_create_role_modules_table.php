@@ -1,7 +1,7 @@
 <?php
 
 use App\Domain\System\Modules\Entities\Module;
-use App\Domain\System\RoleModuless\Entities\RoleModule;
+use App\Domain\System\RoleModules\Entities\RoleModule;
 use App\Domain\System\Roles\Entities\Role;
 use App\Domain\System\Users\Entities\User;
 use Illuminate\Database\Migrations\Migration;
@@ -20,8 +20,8 @@ class CreateRoleModuleObjectTable extends Migration
         Schema::create(RoleModule::ATTR_TABLE, function (Blueprint $table) {
             $table->integer(RoleModule::ATTR_INT_ROLE);
             $table->integer(RoleModule::ATTR_INT_MODULE);
-            $table->bigInteger(RoleModule::ATTR_INT_CREATED_BY);
-            $table->bigInteger(RoleModule::ATTR_INT_UPDATED_BY);
+            $table->integer(RoleModule::ATTR_INT_CREATED_BY)->nullable()->unsigned();
+            $table->integer(RoleModule::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->foreignId(RoleModule::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
             $table->foreignId(RoleModule::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');

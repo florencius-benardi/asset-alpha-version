@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create(User::ATTR_TABLE, function (Blueprint $table) {
-            $table->id();
+            $table->increments(User::ATTR_INT_ID);
             $table->string(User::ATTR_CHAR_NAME);
             $table->string(User::ATTR_CHAR_EMAIL)->unique();
             $table->string(User::ATTR_CHAR_PASSWORD);
@@ -23,10 +23,12 @@ class CreateUsersTable extends Migration
             $table->smallInteger(User::ATTR_INT_STATUS)->default(0);
             $table->string(User::ATTR_CHAR_IMAGE)->nullable();
             $table->timestamp(User::ATTR_DATETIME_VERIFIED)->nullable();
-            $table->integer(User::ATTR_INT_CREATED_BY)->nullable();
-            $table->integer(User::ATTR_INT_UPDATED_BY)->nullable();
+            $table->integer(User::ATTR_INT_CREATED_BY)->nullable()->unsigned();
+            $table->integer(User::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreignId(User::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreignId(User::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
         });
     }
 

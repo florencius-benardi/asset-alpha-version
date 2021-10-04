@@ -13,7 +13,7 @@ class AddForeignKeysToPlantTable extends Migration
      */
     public function up()
     {
-        Schema::table('plant', function (Blueprint $table) {
+        Schema::table('storages', function (Blueprint $table) {
             $table->foreign(['updated_by'])->references(['id'])->on('users');
             $table->foreign(['created_by'])->references(['id'])->on('users');
         });
@@ -26,7 +26,7 @@ class AddForeignKeysToPlantTable extends Migration
      */
     public function down()
     {
-        Schema::table('plant', function (Blueprint $table) {
+        Schema::table('storages', function (Blueprint $table) {
             $table->dropForeign('plant_updated_by_foreign');
             $table->dropForeign('plant_created_by_foreign');
         });

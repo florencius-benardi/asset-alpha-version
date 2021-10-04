@@ -2,10 +2,10 @@
 
 namespace App\Domain\Master\Materials\Entities;
 
+use App\Domain\Core\Entities\BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class MaterialType extends Model
+class MaterialType extends BaseModel
 {
     use HasFactory;
 }

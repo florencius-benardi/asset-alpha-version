@@ -2,8 +2,8 @@
 
 namespace App\Domain\Master\Storages\Entities;
 
+use App\Domain\Core\Entities\BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Storage extends Model
 {

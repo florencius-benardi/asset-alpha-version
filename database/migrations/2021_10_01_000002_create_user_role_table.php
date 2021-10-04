@@ -17,10 +17,10 @@ class CreateRoleUserTable extends Migration
     public function up()
     {
         Schema::create(UserRole::ATTR_TABLE, function (Blueprint $table) {
-            $table->bigInteger(UserRole::ATTR_INT_USER);
+            $table->integer(UserRole::ATTR_INT_USER);
             $table->integer(UserRole::ATTR_INT_ROLE);
-            $table->bigInteger(UserRole::ATTR_INT_CREATED_BY);
-            $table->bigInteger(UserRole::ATTR_INT_UPDATED_BY);
+            $table->integer(UserRole::ATTR_INT_CREATED_BY)->nullable()->unsigned();
+            $table->integer(UserRole::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->foreignId(UserRole::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
             $table->foreignId(UserRole::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');

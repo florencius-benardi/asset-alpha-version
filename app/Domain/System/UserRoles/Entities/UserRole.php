@@ -75,7 +75,10 @@ class UserRole extends BaseModel
      */
     public function createdBy()
     {
-        return $this->hasOne(User::class, self::ATTR_INT_CREATED_BY);
+        return $this->hasOne(User::class, self::ATTR_INT_CREATED_BY)->select(
+            User::ATTR_INT_ID,
+            User::ATTR_CHAR_NAME
+        );
     }
 
     /**
@@ -83,6 +86,9 @@ class UserRole extends BaseModel
      */
     public function updatedBy()
     {
-        return $this->hasOne(User::class, self::ATTR_INT_UPDATED_BY);
+        return $this->hasOne(User::class, self::ATTR_INT_UPDATED_BY)->select(
+            User::ATTR_INT_ID,
+            User::ATTR_CHAR_NAME
+        );
     }
 }
