@@ -3,20 +3,22 @@
 namespace App\Domain\Master\Materials\Entities;
 
 use App\Domain\Core\Entities\BaseModel;
+use App\Domain\Master\Classifications\Entities\ClassificationParameter;
 use App\Domain\System\Users\Entities\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MaterialImage extends BaseModel
+class MaterialClassificationParameter extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    const ATTR_TABLE = 'material_images';
-
+    const ATTR_TABLE = 'material_classification_parameters';
+    const ATTR_INT_CLASSIFICATION_PARAMETER = 'classification_parameter_id';
     const ATTR_INT_MATERIAL = 'material_id';
-    const ATTR_CHAR_FILE = 'file_name';
-    const ATTR_CHAR_ORIGINAL_FILE_NAME = 'original_file_name';
+    const ATTR_CHAR_VALUE = 'value';
 
+
+    const ATTR_RELATIONSHIP_CLASSIFICATION_PARAMETER = 'classificationParameter';
     const ATTR_RELATIONSHIP_MATERIAL = 'material';
     const ATTR_RELATIONSHIP_CREATED_BY = 'createdBy';
     const ATTR_RELATIONSHIP_UPDATED_BY = 'updatedBy';
@@ -50,12 +52,14 @@ class MaterialImage extends BaseModel
     public $timestamps = true;
 
     protected $fillable = [
+        self::ATTR_CHAR_NAME,
         self::ATTR_INT_MATERIAL,
-        self::ATTR_CHAR_FILE,
-        self::ATTR_CHAR_ORIGINAL_FILE_NAME,
+        self::ATTR_INT_CLASSIFICATION_PARAMETER,
+        self::ATTR_CHAR_VALUE,
         self::ATTR_INT_CREATED_BY,
         self::ATTR_INT_UPDATED_BY,
     ];
+
 
     /**
      * Get the material associated with the material.
@@ -67,6 +71,21 @@ class MaterialImage extends BaseModel
             Material::ATTR_CHAR_CODE,
             Material::ATTR_CHAR_NAME,
             Material::ATTR_INT_MATERIAL_GROUP,
+        );
+    }
+
+    /**
+     * Get the parameter associated with the classification parameter.
+     */
+    public function classificationParameter()
+    {
+        return $this->hasOne(ClassificationParameter::class, self::ATTR_INT_CLASSIFICATION_PARAMETER)->select(
+            ClassificationParameter::ATTR_INT_ID,
+            ClassificationParameter::ATTR_CHAR_NAME,
+            ClassificationParameter::ATTR_INT_DATA_TYPE,
+            ClassificationParameter::ATTR_INT_MAXIMUM_LENGTH,
+            ClassificationParameter::ATTR_CHAR_VALUE,
+            ClassificationParameter::ATTR_INT_DECIMAL
         );
     }
 

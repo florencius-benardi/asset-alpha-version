@@ -37,6 +37,6 @@ class CreateLocationTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('location_type');
+        Schema::dropIfExists(LocationType::ATTR_TABLE);
     }
 }

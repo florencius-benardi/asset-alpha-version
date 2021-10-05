@@ -14,7 +14,7 @@ class CreateAssetImageTable extends Migration
     public function up()
     {
         Schema::create('asset_image', function (Blueprint $table) {
-            $table->integer('id_image_asset', true);
+            $table->id();
             $table->integer('asset_id');
             $table->string('code_asset');
             $table->string('image_asset');

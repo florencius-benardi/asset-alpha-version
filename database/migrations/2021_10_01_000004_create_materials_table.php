@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Master\Classifications\Entities\Classification;
 use App\Domain\Master\Materials\Entities\Material;
 use App\Domain\Master\Materials\Entities\MaterialGroup;
 use App\Domain\System\Users\Entities\User;
@@ -16,12 +17,12 @@ class CreateMaterialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('materials', function (Blueprint $table) {
+        Schema::create(Material::ATTR_TABLE, function (Blueprint $table) {
             $table->id();
             $table->string(Material::ATTR_CHAR_CODE, 20)->unique();
             $table->string(Material::ATTR_CHAR_DESCRIPTION, 100);
-            $table->integer('classification_id')->nullable();
             $table->integer(Material::ATTR_INT_MATERIAL_GROUP)->unsigned();
+            $table->integer(Material::ATTR_INT_MATERIAL_CLASSIFICATION)->nullable();
             $table->boolean(Material::ATTR_BOOL_VARIANT)->default(FALSE);
             $table->integer(Material::ATTR_INT_CREATED_BY)->nullable()->unsigned();
             $table->integer(Material::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
@@ -29,7 +30,8 @@ class CreateMaterialsTable extends Migration
             $table->softDeletes();
             $table->foreignId(Material::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
             $table->foreignId(Material::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Material::ATTR_INT_MATERIAL_GROUP)->constrained(MaterialGroup::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreignId(Material::ATTR_INT_MATERIAL_GROUP)->constrained(MaterialGroup::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreignId(Material::ATTR_INT_MATERIAL_CLASSIFICATION)->constrained(Classification::ATTR_TABLE)->onDelete('CASCADE');
         });
     }
 
@@ -40,6 +42,6 @@ class CreateMaterialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('materials');
+        Schema::dropIfExists(Material::ATTR_TABLE);
     }
 }

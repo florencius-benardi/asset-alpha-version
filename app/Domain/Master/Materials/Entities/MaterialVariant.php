@@ -3,21 +3,25 @@
 namespace App\Domain\Master\Materials\Entities;
 
 use App\Domain\Core\Entities\BaseModel;
+use App\Domain\Master\Classifications\Entities\Classification;
 use App\Domain\System\Users\Entities\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MaterialImage extends BaseModel
+class MaterialVariant extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    const ATTR_TABLE = 'material_images';
+    const ATTR_TABLE = 'material_variants';
 
-    const ATTR_INT_MATERIAL = 'material_id';
-    const ATTR_CHAR_FILE = 'file_name';
-    const ATTR_CHAR_ORIGINAL_FILE_NAME = 'original_file_name';
+    const ATTR_CHAR_CODE = 'code';
+    const ATTR_INT_MATERIAL_CLASSIFICATION = 'material_classification_id';
+    const ATTR_INT_MATERIAL_GROUP = 'material_group_id';
+    const ATTR_BOOL_VARIANT = 'material_variant';
+    const ATTR_BOOL_IMAGE = 'material_image';
 
-    const ATTR_RELATIONSHIP_MATERIAL = 'material';
+    const ATTR_RELATIONSHIP_CLASSIFICATION = 'classification';
+    const ATTR_RELATIONSHIP_MATERIAL_GROUP = 'materialGroup';
     const ATTR_RELATIONSHIP_CREATED_BY = 'createdBy';
     const ATTR_RELATIONSHIP_UPDATED_BY = 'updatedBy';
 
@@ -50,24 +54,36 @@ class MaterialImage extends BaseModel
     public $timestamps = true;
 
     protected $fillable = [
-        self::ATTR_INT_MATERIAL,
-        self::ATTR_CHAR_FILE,
-        self::ATTR_CHAR_ORIGINAL_FILE_NAME,
+        self::ATTR_CHAR_CODE,
+        self::ATTR_CHAR_NAME,
+        self::ATTR_INT_MATERIAL_GROUP,
+        self::ATTR_BOOL_VARIANT,
         self::ATTR_INT_CREATED_BY,
         self::ATTR_INT_UPDATED_BY,
     ];
 
     /**
-     * Get the material associated with the material.
+     * Get the material classification associated with the classification.
      */
-    public function material()
+    public function classification()
     {
-        return $this->hasOne(Material::class, self::ATTR_INT_MATERIAL)->select(
-            Material::ATTR_INT_ID,
-            Material::ATTR_CHAR_CODE,
-            Material::ATTR_CHAR_NAME,
-            Material::ATTR_INT_MATERIAL_GROUP,
+        return $this->hasOne(Classification::class, self::ATTR_INT_MATERIAL_CLASSIFICATION)->select(
+            Classification::ATTR_INT_ID,
+            Classification::ATTR_CHAR_NAME,
         );
+    }
+
+    /**
+     * Get the Material group associated with the Material group.
+     */
+    public function materialGroup()
+    {
+        return $this->hasOne(MaterialGroup::class, self::ATTR_INT_MATERIAL_GROUP)
+            ->select(
+                MaterialGroup::ATTR_INT_ID,
+                MaterialGroup::ATTR_CHAR_CODE,
+                MaterialGroup::ATTR_CHAR_DESCRIPTION,
+            );
     }
 
     /**

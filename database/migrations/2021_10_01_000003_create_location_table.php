@@ -36,7 +36,7 @@ class CreateLocationTable extends Migration
             $table->softDeletes();
             $table->foreignId(Location::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
             $table->foreignId(Location::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Location::ATTR_INT_LOCATION_TYPE)->constrained(LocationType::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreignId(Location::ATTR_INT_LOCATION_TYPE)->constrained(LocationType::ATTR_TABLE)->onDelete('CASCADE');
         });
     }
 

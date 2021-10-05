@@ -3,6 +3,7 @@
 namespace App\Domain\Master\Materials\Entities;
 
 use App\Domain\Core\Entities\BaseModel;
+use App\Domain\Master\Classifications\Entities\Classification;
 use App\Domain\System\Users\Entities\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +20,8 @@ class Material extends BaseModel
     const ATTR_BOOL_VARIANT = 'material_variant';
     const ATTR_BOOL_IMAGE = 'material_image';
 
-    const ATTR_RELATIONSHIP_LOCATION_TYPE = 'locationType';
+    const ATTR_RELATIONSHIP_CLASSIFICATION = 'classification';
+    const ATTR_RELATIONSHIP_MATERIAL_GROUP = 'materialGroup';
     const ATTR_RELATIONSHIP_CREATED_BY = 'createdBy';
     const ATTR_RELATIONSHIP_UPDATED_BY = 'updatedBy';
 
@@ -59,6 +61,17 @@ class Material extends BaseModel
         self::ATTR_INT_CREATED_BY,
         self::ATTR_INT_UPDATED_BY,
     ];
+
+    /**
+     * Get the material classification associated with the classification.
+     */
+    public function classification()
+    {
+        return $this->hasOne(Classification::class, self::ATTR_INT_MATERIAL_CLASSIFICATION)->select(
+            Classification::ATTR_INT_ID,
+            Classification::ATTR_CHAR_NAME,
+        );
+    }
 
     /**
      * Get the Material group associated with the Material group.
