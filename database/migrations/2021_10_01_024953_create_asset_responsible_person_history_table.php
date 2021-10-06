@@ -16,11 +16,12 @@ class CreateAssetResponsiblePersonHistoryTable extends Migration
         Schema::create('asset_responsible_person_history', function (Blueprint $table) {
             $table->id();
             $table->integer('asset_id')->nullable();
+            $table->integer('employee_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->integer('employee_id')->nullable();
+            
         });
     }
 
