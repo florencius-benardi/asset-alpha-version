@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Master\Storages\Entities;
+namespace App\Domain\Transaction\Assets\Entities;
 
 use App\Domain\Core\Entities\BaseModel;
 use App\Domain\Master\Locations\Entities\Location;
@@ -8,16 +8,17 @@ use App\Domain\System\Users\Entities\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Storage extends BaseModel
+class AssetLocationHistory extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    const ATTR_TABLE = 'storages';
+    const ATTR_TABLE = 'asset_location_histories';
 
-    const ATTR_CHAR_CODE = 'code';
+    const ATTR_INT_ASSET = 'asset_id';
     const ATTR_INT_LOCATION = 'location_id';
 
-    const ATTR_RELATIONSHIP_LOCATION = 'location';
+    const ATTR_RELATIONSHIP_ASSET = 'asset';
+    const ATTR_RELATIONSHIP_LOCATION = 'depreciation';
     const ATTR_RELATIONSHIP_CREATED_BY = 'createdBy';
     const ATTR_RELATIONSHIP_UPDATED_BY = 'updatedBy';
 
@@ -33,14 +34,14 @@ class Storage extends BaseModel
      *
      * @var string
      */
-    protected $primaryKey = self::ATTR_INT_ID;
+    protected $primaryKey = null;
 
     /**
      * Indicates if the model's ID is auto-incrementing.
      *
      * @var bool
      */
-    public $incrementing = true;
+    public $incrementing = false;
 
     /**
      * Indicates if the model should be timestamped.
@@ -50,8 +51,7 @@ class Storage extends BaseModel
     public $timestamps = true;
 
     protected $fillable = [
-        self::ATTR_CHAR_CODE,
-        self::ATTR_CHAR_NAME,
+        self::ATTR_INT_ASSET,
         self::ATTR_INT_LOCATION,
         self::ATTR_INT_CREATED_BY,
         self::ATTR_INT_UPDATED_BY,
@@ -66,6 +66,19 @@ class Storage extends BaseModel
             Location::ATTR_INT_ID,
             Location::ATTR_CHAR_CODE,
             Location::ATTR_CHAR_ADDRESS
+        );
+    }
+
+
+    /**
+     * Get the asset associated with the asset table.
+     */
+    public function asset()
+    {
+        return $this->hasOne(Asset::class, self::ATTR_INT_ASSET)->select(
+            Asset::ATTR_INT_ID,
+            Asset::ATTR_CHAR_CODE,
+            Asset::ATTR_CHAR_DESCRIPTION,
         );
     }
 

@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Domain\Master\Storages\Entities;
+namespace App\Domain\Transaction\Assets\Entities;
 
 use App\Domain\Core\Entities\BaseModel;
-use App\Domain\Master\Locations\Entities\Location;
 use App\Domain\System\Users\Entities\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Storage extends BaseModel
+class AssetImage extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    const ATTR_TABLE = 'storages';
+    const ATTR_TABLE = 'asset_images';
 
-    const ATTR_CHAR_CODE = 'code';
-    const ATTR_INT_LOCATION = 'location_id';
+    const ATTR_INT_ASSET = 'asset_id';
+    const ATTR_CHAR_FILE = 'file_name';
+    const ATTR_CHAR_ORIGINAL_FILE_NAME = 'original_file_name';
 
-    const ATTR_RELATIONSHIP_LOCATION = 'location';
+    const ATTR_RELATIONSHIP_Asset = 'Asset';
     const ATTR_RELATIONSHIP_CREATED_BY = 'createdBy';
     const ATTR_RELATIONSHIP_UPDATED_BY = 'updatedBy';
 
@@ -50,22 +50,21 @@ class Storage extends BaseModel
     public $timestamps = true;
 
     protected $fillable = [
-        self::ATTR_CHAR_CODE,
-        self::ATTR_CHAR_NAME,
-        self::ATTR_INT_LOCATION,
+        self::ATTR_INT_ASSET,
+        self::ATTR_CHAR_FILE,
+        self::ATTR_CHAR_ORIGINAL_FILE_NAME,
         self::ATTR_INT_CREATED_BY,
         self::ATTR_INT_UPDATED_BY,
     ];
 
     /**
-     * Get the location storage creator associated with the location.
+     * Get the Asset associated with the Asset.
      */
-    public function location()
+    public function Asset()
     {
-        return $this->hasOne(Location::class, self::ATTR_INT_LOCATION)->select(
-            Location::ATTR_INT_ID,
-            Location::ATTR_CHAR_CODE,
-            Location::ATTR_CHAR_ADDRESS
+        return $this->hasOne(Asset::class, self::ATTR_INT_ASSET)->select(
+            Asset::ATTR_INT_ID,
+            Asset::ATTR_CHAR_DESCRIPTION
         );
     }
 

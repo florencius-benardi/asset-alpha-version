@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssetTypeTable extends Migration
+class CreateReturnLineDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateAssetTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('asset_type', function (Blueprint $table) {
+        Schema::create('return_line_details', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 8)->unique();
-            $table->string('name')->nullable();
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +26,6 @@ class CreateAssetTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asset_type');
+        Schema::dropIfExists('return_line_details');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Domain\Core\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BaseModel  extends BaseModel
+class BaseModel extends Model
 {
     const ATTR_INT_ID = 'id';
     const ATTR_CHAR_DESCRIPTION = 'description';

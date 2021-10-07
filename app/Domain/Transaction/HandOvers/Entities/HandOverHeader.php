@@ -1,23 +1,26 @@
 <?php
 
-namespace App\Domain\Master\Storages\Entities;
+namespace App\Domain\Transaction\HandOvers\Entities;
 
 use App\Domain\Core\Entities\BaseModel;
-use App\Domain\Master\Locations\Entities\Location;
 use App\Domain\System\Users\Entities\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Storage extends BaseModel
+class HandOverHeader extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    const ATTR_TABLE = 'storages';
+    const ATTR_TABLE = 'hand_over_headers';
 
-    const ATTR_CHAR_CODE = 'code';
-    const ATTR_INT_LOCATION = 'location_id';
+    const ATTR_INT_ASSET = 'asset_id';
+    const ATTR_INT_DEPRECIATION = 'depreciation_id';
+    const ATTR_MONTHYEAR_PERIODE = 'periode';
+    const ATTR_DECIMAL_AMOUNT = 'amount';
+    const ATTR_INT_SEQUENCE = 'sequence';
+    const ATTR_DECIMAL_SALVAGE_VALUE = 'salvage_value';
+    const ATTR_BOOL_ACTIVE = 'active';
 
-    const ATTR_RELATIONSHIP_LOCATION = 'location';
     const ATTR_RELATIONSHIP_CREATED_BY = 'createdBy';
     const ATTR_RELATIONSHIP_UPDATED_BY = 'updatedBy';
 
@@ -50,22 +53,24 @@ class Storage extends BaseModel
     public $timestamps = true;
 
     protected $fillable = [
-        self::ATTR_CHAR_CODE,
-        self::ATTR_CHAR_NAME,
-        self::ATTR_INT_LOCATION,
-        self::ATTR_INT_CREATED_BY,
-        self::ATTR_INT_UPDATED_BY,
+        self::ATTR_INT_ASSET,
+        self::ATTR_INT_DEPRECIATION,
+        self::ATTR_INT_SEQUENCE,
+        self::ATTR_DECIMAL_AMOUNT,
+        self::ATTR_MONTHYEAR_PERIODE,
+        self::ATTR_DECIMAL_SALVAGE_VALUE,
+        self::ATTR_BOOL_ACTIVE,
     ];
 
+
     /**
-     * Get the location storage creator associated with the location.
+     * Get the asset depreciation associated with the depreciation.
      */
-    public function location()
+    public function handOverLine()
     {
-        return $this->hasOne(Location::class, self::ATTR_INT_LOCATION)->select(
-            Location::ATTR_INT_ID,
-            Location::ATTR_CHAR_CODE,
-            Location::ATTR_CHAR_ADDRESS
+        return $this->hasOne(Depreciation::class, self::ATTR_INT_DEPRECIATION)->select(
+            User::ATTR_INT_ID,
+            User::ATTR_CHAR_NAME
         );
     }
 
