@@ -24,9 +24,9 @@ class CreateMaterialVariantFieldFieldsTable extends Migration
             $table->integer(MaterialVariantField::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(MaterialVariantField::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(MaterialVariantField::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(MaterialVariantField::ATTR_INT_MATERIAL)->constrained(Material::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreign(MaterialVariantField::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(MaterialVariantField::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(MaterialVariantField::ATTR_INT_MATERIAL)->constrained(Material::ATTR_TABLE)->onDelete('CASCADE');
             $table->unique([MaterialVariantField::ATTR_INT_MATERIAL, MaterialVariantField::ATTR_CHAR_NAME]);
         });
     }

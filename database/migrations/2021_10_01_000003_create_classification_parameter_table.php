@@ -29,9 +29,9 @@ class CreateClassificationParameterParameterTable extends Migration
             $table->integer(ClassificationParameter::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(ClassificationParameter::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(ClassificationParameter::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(ClassificationParameter::ATTR_INT_CLASSIFICATION)->constrained(Classification::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(ClassificationParameter::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(ClassificationParameter::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(ClassificationParameter::ATTR_INT_CLASSIFICATION)->constrained(Classification::ATTR_TABLE)->onDelete('SET NULL');
         });
     }
 

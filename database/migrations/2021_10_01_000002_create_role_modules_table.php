@@ -8,7 +8,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoleModuleObjectTable extends Migration
+class CreateRoleModulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -23,10 +23,11 @@ class CreateRoleModuleObjectTable extends Migration
             $table->integer(RoleModule::ATTR_INT_CREATED_BY)->nullable()->unsigned();
             $table->integer(RoleModule::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
-            $table->foreignId(RoleModule::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(RoleModule::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(RoleModule::ATTR_INT_ROLE)->constrained(Role::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(RoleModule::ATTR_INT_MODULE)->constrained(Module::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(RoleModule::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(RoleModule::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(RoleModule::ATTR_INT_ROLE)->on(Role::ATTR_INT_ID)->references(Role::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(RoleModule::ATTR_INT_MODULE)->on(Module::ATTR_INT_ID)->references(Module::ATTR_TABLE)->onDelete('SET NULL');
+            $table->unique([RoleModule::ATTR_INT_ROLE, RoleModule::ATTR_INT_MODULE]);
         });
     }
 

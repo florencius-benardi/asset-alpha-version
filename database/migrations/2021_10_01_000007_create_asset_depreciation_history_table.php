@@ -19,20 +19,20 @@ class CreateAssetDepreciationHistoryTable extends Migration
     {
         Schema::create(AssetDepreciationHistory::ATTR_TABLE, function (Blueprint $table) {
             $table->integer(AssetDepreciationHistory::ATTR_INT_ASSET);
+            $table->date(AssetDepreciationHistory::ATTR_DATE_PERIODE);
             $table->integer(AssetDepreciationHistory::ATTR_INT_DEPRECIATION)->unsigned();
             $table->integer(AssetDepreciationHistory::ATTR_INT_SEQUENCE)->unsigned();
             $table->decimal(AssetDepreciationHistory::ATTR_DECIMAL_AMOUNT, 20, 3);
-            $table->date(AssetDepreciationHistory::ATTR_DATE_PERIODE);
             $table->decimal(AssetDepreciationHistory::ATTR_DECIMAL_SALVAGE_VALUE, 12);
             $table->boolean(AssetDepreciationHistory::ATTR_BOOL_ACTIVE)->default(true);
             $table->integer(AssetDepreciationHistory::ATTR_INT_CREATED_BY)->nullable()->unsigned();
             $table->integer(AssetDepreciationHistory::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(AssetDepreciationHistory::ATTR_INT_ASSET)->constrained(Asset::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(AssetDepreciationHistory::ATTR_INT_DEPRECIATION)->constrained(Depreciation::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(AssetDepreciationHistory::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(AssetDepreciationHistory::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(AssetDepreciationHistory::ATTR_INT_ASSET)->constrained(Asset::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(AssetDepreciationHistory::ATTR_INT_DEPRECIATION)->constrained(Depreciation::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(AssetDepreciationHistory::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(AssetDepreciationHistory::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
         });
     }
 

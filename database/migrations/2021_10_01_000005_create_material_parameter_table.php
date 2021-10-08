@@ -26,10 +26,10 @@ class CreateMaterialParameterTable extends Migration
             $table->integer(MaterialClassificationParameter::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(MaterialClassificationParameter::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(MaterialClassificationParameter::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(MaterialClassificationParameter::ATTR_INT_CLASSIFICATION_PARAMETER)->constrained(ClassificationParameter::ATTR_TABLE)->onDelete('CASCADE');
-            $table->foreignId(MaterialClassificationParameter::ATTR_INT_MATERIAL)->constrained(Material::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreign(MaterialClassificationParameter::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(MaterialClassificationParameter::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(MaterialClassificationParameter::ATTR_INT_CLASSIFICATION_PARAMETER)->constrained(ClassificationParameter::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreign(MaterialClassificationParameter::ATTR_INT_MATERIAL)->constrained(Material::ATTR_TABLE)->onDelete('CASCADE');
         });
     }
 

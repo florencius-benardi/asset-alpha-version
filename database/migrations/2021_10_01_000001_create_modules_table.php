@@ -16,14 +16,14 @@ class CreateModulesTable extends Migration
     public function up()
     {
         Schema::create(Module::ATTR_TABLE, function (Blueprint $table) {
-            $table->increments(Module::ATTR_INT_ID);
+            $table->id();
             $table->string(Module::ATTR_CHAR_DESCRIPTION, 50);
             $table->integer(Module::ATTR_INT_CREATED_BY)->nullable()->unsigned();
             $table->integer(Module::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(Module::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Module::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Module::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Module::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
         });
     }
 

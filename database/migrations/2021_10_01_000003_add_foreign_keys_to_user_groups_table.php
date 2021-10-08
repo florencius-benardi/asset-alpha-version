@@ -16,8 +16,8 @@ class AddForeignKeysToUserGroupsTable extends Migration
     public function up()
     {
         Schema::table(UserGroup::ATTR_TABLE, function (Blueprint $table) {
-            $table->foreignId(User::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(User::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(User::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(User::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
         });
     }
 

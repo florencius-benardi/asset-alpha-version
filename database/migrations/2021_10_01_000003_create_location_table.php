@@ -34,9 +34,9 @@ class CreateLocationTable extends Migration
             $table->integer(Location::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(Location::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Location::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Location::ATTR_INT_LOCATION_TYPE)->constrained(LocationType::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreignId(Location::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Location::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Location::ATTR_INT_LOCATION_TYPE)->constrained(LocationType::ATTR_TABLE)->onDelete('CASCADE');
         });
     }
 

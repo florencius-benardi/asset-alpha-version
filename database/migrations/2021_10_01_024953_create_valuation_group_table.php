@@ -1,5 +1,7 @@
 <?php
 
+use App\Domain\Master\ValuationGroups\Entities\ValuationGroup;
+use App\Domain\System\Users\Entities\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,14 +15,16 @@ class CreateValuationGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('valuation_groups', function (Blueprint $table) {
+        Schema::create(ValuationGroup::ATTR_TABLE, function (Blueprint $table) {
             $table->id();
-            $table->string('code', 8)->unique();
-            $table->string('name')->nullable();
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->string(ValuationGroup::ATTR_CHAR_CODE, 10)->unique();
+            $table->string(ValuationGroup::ATTR_CHAR_NAME, 100)->nullable();
+            $table->integer(ValuationGroup::ATTR_INT_CREATED_BY)->nullable()->unsigned();
+            $table->integer(ValuationGroup::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign(ValuationGroup::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(ValuationGroup::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
         });
     }
 
@@ -31,6 +35,6 @@ class CreateValuationGroupTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('valuation_groups');
+        Schema::dropIfExists(ValuationGroup::ATTR_TABLE);
     }
 }

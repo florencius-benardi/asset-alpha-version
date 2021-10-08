@@ -5,6 +5,7 @@ use App\Domain\Master\Depreciations\Entities\DepreciationType;
 use App\Domain\Master\Locations\Entities\Location;
 use App\Domain\Master\Storages\Entities\Storage;
 use App\Domain\Master\Vendors\Entities\Vendor;
+use App\Domain\Orange\Employee\Entities\Employee;
 use App\Domain\System\Users\Entities\User;
 use App\Domain\Transaction\Assets\Entities\Asset;
 use Illuminate\Database\Migrations\Migration;
@@ -67,15 +68,16 @@ class CreateAssetTable extends Migration
             $table->integer(Asset::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(Asset::ATTR_INT_VENDOR)->constrained(Vendor::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(Asset::ATTR_INT_STORAGE)->constrained(Storage::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(Asset::ATTR_INT_LOCATION)->constrained(Location::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(Asset::ATTR_INT_PARENT_ASSET)->constrained(Asset::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(Asset::ATTR_INT_PREVIOUS_ASSET)->constrained(Asset::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(Asset::ATTR_INT_DEPRECIATION)->constrained(Depreciation::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(Asset::ATTR_INT_DEPRECIATION_TYPE)->constrained(DepreciationType::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(Asset::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Asset::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Asset::ATTR_INT_EMPLOYEE)->constrained(Employee::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(Asset::ATTR_INT_VENDOR)->constrained(Vendor::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(Asset::ATTR_INT_STORAGE)->constrained(Storage::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(Asset::ATTR_INT_LOCATION)->constrained(Location::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(Asset::ATTR_INT_PARENT_ASSET)->constrained(Asset::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(Asset::ATTR_INT_PREVIOUS_ASSET)->constrained(Asset::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(Asset::ATTR_INT_DEPRECIATION)->constrained(Depreciation::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(Asset::ATTR_INT_DEPRECIATION_TYPE)->constrained(DepreciationType::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(Asset::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Asset::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
         });
     }
 

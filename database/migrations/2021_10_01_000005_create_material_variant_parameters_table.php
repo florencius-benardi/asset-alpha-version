@@ -26,10 +26,10 @@ class CreateMaterialVariantParametersTable extends Migration
             $table->integer(MaterialVariantParameter::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(MaterialVariantParameter::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(MaterialVariantParameter::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(MaterialVariantParameter::ATTR_INT_MATERIAL)->constrained(Material::ATTR_TABLE)->onDelete('CASCADE');
-            $table->foreignId(MaterialVariantParameter::ATTR_INT_VARIANT_FIELD)->constrained(MaterialVariantField::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreign(MaterialVariantParameter::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(MaterialVariantParameter::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(MaterialVariantParameter::ATTR_INT_MATERIAL)->constrained(Material::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreign(MaterialVariantParameter::ATTR_INT_VARIANT_FIELD)->constrained(MaterialVariantField::ATTR_TABLE)->onDelete('CASCADE');
         });
     }
 

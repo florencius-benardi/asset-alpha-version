@@ -28,10 +28,10 @@ class CreateMaterialsTable extends Migration
             $table->integer(Material::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(Material::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Material::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Material::ATTR_INT_MATERIAL_GROUP)->constrained(MaterialGroup::ATTR_TABLE)->onDelete('CASCADE');
-            $table->foreignId(Material::ATTR_INT_MATERIAL_CLASSIFICATION)->constrained(Classification::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreign(Material::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Material::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Material::ATTR_INT_MATERIAL_GROUP)->constrained(MaterialGroup::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreign(Material::ATTR_INT_MATERIAL_CLASSIFICATION)->constrained(Classification::ATTR_TABLE)->onDelete('CASCADE');
         });
     }
 

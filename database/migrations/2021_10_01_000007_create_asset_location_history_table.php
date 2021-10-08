@@ -26,10 +26,10 @@ class CreateAssetLocationHistoryTable extends Migration
             $table->integer(AssetLocationHistory::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(AssetLocationHistory::ATTR_INT_ASSET)->constrained(Asset::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(AssetLocationHistory::ATTR_INT_LOCATION)->constrained(Location::ATTR_TABLE)->onDelete('NO ACTION');
-            $table->foreignId(AssetLocationHistory::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(AssetLocationHistory::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(AssetLocationHistory::ATTR_INT_ASSET)->constrained(Asset::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(AssetLocationHistory::ATTR_INT_LOCATION)->constrained(Location::ATTR_TABLE)->onDelete('NO ACTION');
+            $table->foreign(AssetLocationHistory::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(AssetLocationHistory::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
             $table->unique([AssetLocationHistory::ATTR_INT_SEQUENCE, AssetLocationHistory::ATTR_INT_ASSET]);
         });
     }

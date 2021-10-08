@@ -27,9 +27,9 @@ class CreateDepreciationTable extends Migration
             $table->integer(Depreciation::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId(Depreciation::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Depreciation::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(Depreciation::ATTR_INT_DEPRECIATION_TYPE)->constrained(DepreciationType::ATTR_TABLE)->onDelete('CASCADE');
+            $table->foreign(Depreciation::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Depreciation::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(Depreciation::ATTR_INT_DEPRECIATION_TYPE)->constrained(DepreciationType::ATTR_TABLE)->onDelete('CASCADE');
         });
     }
 

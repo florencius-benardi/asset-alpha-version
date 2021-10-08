@@ -22,10 +22,10 @@ class CreateRoleUserTable extends Migration
             $table->integer(UserRole::ATTR_INT_CREATED_BY)->nullable()->unsigned();
             $table->integer(UserRole::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
-            $table->foreignId(UserRole::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(UserRole::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(UserRole::ATTR_INT_ROLE)->constrained(Role::ATTR_TABLE)->onDelete('SET NULL');
-            $table->foreignId(UserRole::ATTR_INT_USER)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(UserRole::ATTR_INT_CREATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(UserRole::ATTR_INT_UPDATED_BY)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(UserRole::ATTR_INT_ROLE)->constrained(Role::ATTR_TABLE)->onDelete('SET NULL');
+            $table->foreign(UserRole::ATTR_INT_USER)->references(User::ATTR_INT_ID)->on(User::ATTR_TABLE)->onDelete('SET NULL');
         });
     }
 
