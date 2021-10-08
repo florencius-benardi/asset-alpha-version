@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssetImage360Table extends Migration
+class CreateHandoveLineDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateAssetImage360Table extends Migration
      */
     public function up()
     {
-        Schema::create('asset_image360', function (Blueprint $table) {
+        Schema::create('handove_line_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('asset_id');
-            $table->string('description', 150);
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +26,6 @@ class CreateAssetImage360Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asset_image360');
+        Schema::dropIfExists('handove_line_details');
     }
 }

@@ -18,7 +18,8 @@ class CreateAssetLocationHistoryTable extends Migration
     public function up()
     {
         Schema::create(AssetLocationHistory::ATTR_TABLE, function (Blueprint $table) {
-            $table->id();
+            $table->integer(AssetLocationHistory::ATTR_INT_SEQUENCE)->unsigned();
+            $table->date(AssetLocationHistory::ATTR_DATE_EFFECTIVE)->nullable();
             $table->integer(AssetLocationHistory::ATTR_INT_ASSET)->unsigned();
             $table->integer(AssetLocationHistory::ATTR_INT_LOCATION)->unsigned();
             $table->integer(AssetLocationHistory::ATTR_INT_CREATED_BY)->nullable()->unsigned();
@@ -29,6 +30,7 @@ class CreateAssetLocationHistoryTable extends Migration
             $table->foreignId(AssetLocationHistory::ATTR_INT_LOCATION)->constrained(Location::ATTR_TABLE)->onDelete('NO ACTION');
             $table->foreignId(AssetLocationHistory::ATTR_INT_CREATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
             $table->foreignId(AssetLocationHistory::ATTR_INT_UPDATED_BY)->constrained(User::ATTR_TABLE)->onDelete('SET NULL');
+            $table->unique([AssetLocationHistory::ATTR_INT_SEQUENCE, AssetLocationHistory::ATTR_INT_ASSET]);
         });
     }
 

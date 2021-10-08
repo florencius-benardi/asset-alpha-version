@@ -19,8 +19,8 @@ class CreateAssetImageTable extends Migration
         Schema::create(AssetImage::ATTR_TABLE, function (Blueprint $table) {
             $table->id();
             $table->integer(AssetImage::ATTR_INT_ASSET);
-            $table->string('code_asset');
-            $table->string('image_asset');
+            $table->string(AssetImage::ATTR_CHAR_FILE);
+            $table->string(AssetImage::ATTR_CHAR_ORIGINAL_FILE_NAME);
             $table->integer(AssetImage::ATTR_INT_CREATED_BY)->nullable()->unsigned();
             $table->integer(AssetImage::ATTR_INT_UPDATED_BY)->nullable()->unsigned();
             $table->timestamps();
